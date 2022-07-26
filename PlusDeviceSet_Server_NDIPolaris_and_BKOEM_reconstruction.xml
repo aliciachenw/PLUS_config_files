@@ -1,0 +1,144 @@
+<PlusConfiguration version="2.1">
+
+  <DataCollection StartupDelaySec="1.0" >
+    <DeviceSet 
+      Name="PlusServer: NDI Polaris tracker with passive markers and BK OEM and reconstruction" 
+      Description="Broadcasting tool tracking data through OpenIGTLink
+For NDI Polaris passive marker starting kit: Tool (8700339), Stylus (8700340), Reference (8700449)" />
+    <Device 
+      Id="VideoDevice"
+      Type="BkProFocusOem"
+      OemPort="7915"
+      ScannerAddress="10.0.0.1"
+      OfflineTestingFilePath="C:/Research/fCal/fCal_OfflineTesting"
+      AcquisitionRate="30"
+      LocalTimeOffsetSec="0">
+      <DataSources>
+        <DataSource Type="Video" Id="Video" PortUsImageOrientation="MF"  />
+      </DataSources>
+      <OutputChannels>
+        <OutputChannel Id="VideoStream" VideoDataSourceId="Video"  />
+      </OutputChannels>
+    </Device>
+
+    <Device
+      Id="TrackerDevice"
+      Type="PolarisTracker"
+      ToolReferenceFrame="Tracker" 
+      SerialPort="1">
+      <DataSources>
+        <DataSource Type="Tool" Id="Tool" RomFile="NdiToolDefinitions/y_probe.rom"  />
+        <DataSource Type="Tool" Id="Stylus" RomFile="NdiToolDefinitions/cross_probe.rom"  />
+        <!-- <DataSource Type="Tool" Id="Reference" RomFile="NdiToolDefinitions/cross_probe.rom"  /> -->
+      </DataSources>
+      <InputChannels>
+        <InputChannel Id="VideoStream"  />
+      </InputChannels>
+      <OutputChannels>
+        <OutputChannel Id="TrackerStream" >
+          <DataSource Id="Tool"/>
+          <DataSource Id="Stylus"/>
+          <DataSource Id="Reference"/>
+        </OutputChannel>
+      </OutputChannels>
+    </Device>
+    <Device 
+      Id="TrackedVideoDevice" 
+      Type="VirtualMixer" >
+      <InputChannels>
+        <InputChannel Id="TrackerStream" />
+        <InputChannel Id="VideoStream" />
+      </InputChannels>
+      <OutputChannels>
+        <OutputChannel Id="TrackedVideoStream"/>
+      </OutputChannels>
+    </Device>
+    <Device
+      Id="CaptureDevice"
+      Type="VirtualCapture"
+      BaseFilename="RecordingTest.igs.mha"
+      EnableCapturingOnStart="FALSE" >
+      <InputChannels>
+        <InputChannel Id="TrackedVideoStream" />
+      </InputChannels>
+    </Device>  
+    <Device
+      Id="VolumeReconstructorDevice"
+      Type="VirtualVolumeReconstructor">
+      <InputChannels>
+        <InputChannel Id="TrackedVideoStream" />
+      </InputChannels>
+      <VolumeReconstruction
+        ImageCoordinateFrame="Image" ReferenceCoordinateFrame="Tracker"
+        Interpolation="LINEAR" Optimization="NONE" Compounding="On" FillHoles="Off" NumberOfThreads="2"
+        OutputSpacing="0.1 0.1 0.1" >
+		<HoleFilling>
+          <HoleFillingElement Type="GAUSSIAN" Size="5" Stdev="0.6667" MinimumKnownVoxelsRatio="0.50001" />
+          <HoleFillingElement Type="STICK" StickLengthLimit="9" NumberOfSticksToUse="1" />
+         </HoleFilling>
+	   </VolumeReconstruction>
+    </Device>
+  </DataCollection>
+
+  <CoordinateDefinitions>
+    <Transform From="StylusTip" To="Stylus"
+      Matrix="
+        0.884771 0.16043 0.437541 -11.3933 
+        -0.44352 0.578114 0.68489 107.311 
+        -0.143072 -0.800029 0.582653 -1310.57 
+        0 0 0 1 "
+       Error="0.554951" Date="012617_105449" />
+    <Transform From="Image" To="Reference"
+      Matrix="
+        1 0.0 0.0 0.0
+        0.0 1 0.0 0.0
+        0.0 0.0 1 0.0        
+        0 0 0 1" />
+    <Transform From="Image" To="Tool"
+      Matrix="
+        -0.0259715 -0.119934 -0.242946 53.2739 
+        -0.270843 0.00505634 0.0264576 132.272 
+        -0.00714508 0.244278 -0.119828 -241.572 
+        0 0 0 1 
+        " />
+  </CoordinateDefinitions>
+
+  <PlusOpenIGTLinkServer 
+    MaxNumberOfIgtlMessagesToSend="1" 
+    MaxTimeSpentWithProcessingMs="50" 
+    ListeningPort="18944" 
+    SendValidTransformsOnly="true" 
+    OutputChannelId="VideoStream" > 
+    <DefaultClientInfo> 
+      <MessageTypes> 
+        <Message Type="IMAGE" />
+      </MessageTypes>
+      <ImageNames>
+        <Image Name="Image" EmbeddedTransformToFrame="Image" />
+      </ImageNames>
+    </DefaultClientInfo>
+  </PlusOpenIGTLinkServer>
+
+
+  <PlusOpenIGTLinkServer 
+    MaxNumberOfIgtlMessagesToSend="1" 
+    MaxTimeSpentWithProcessingMs="50" 
+    ListeningPort="18945" 
+    SendValidTransformsOnly="true" 
+    OutputChannelId="TrackerStream" > 
+    <DefaultClientInfo> 
+      <MessageTypes> 
+        <Message Type="TRANSFORM" />
+      </MessageTypes>
+      <TransformNames>
+        <!-- <Transform Name="StylusTipToReference" /> -->
+        <!-- <Transform Name="ToolToReference" /> -->
+        <Transform Name="ToolToTracker" />
+        <Transform Name="StylusToTracker" />
+        <Transform Name="ImageToTracker" />
+        <!-- <Transform Name="ReferenceToTracker" /> -->
+      </TransformNames>
+    </DefaultClientInfo>
+  </PlusOpenIGTLinkServer>
+
+</PlusConfiguration>

@@ -35,10 +35,20 @@
 4. Must have the VirtualVolumeReconstructor for 3D reconstruction
 5. Different stream can not be send to the IGT through the same port, so need to open different IGTLConnector to get data simulatenously (and NDI won't send data unless it detects valid transform)
 6. Change the coordinate in the config to get ImageToTracker directly
-7. During the straming, image depth and size can not be changed
+7. During the straming, image depth, size and sector can not be changed
+8. How to change the image cropping: change the clip origin and size in:
+    ```
+    <DataSource Type="Video" Id="Video" PortUsImageOrientation="MF" ImageType="BRIGHTNESS" ClipRectangleOrigin="225 170"  ClipRectangleSize="469 500" />
+    ```
+    The coordinate is (x, y) (for 2D images we need to omit the third dimension). The value of the pixel location can refer to Slicer (though Slicer shows the image upside down)
+
 
 
 # Official Tutorial
 1. [SlicerIGT](http://www.slicerigt.org/wp/user-tutorial/)
 2. [fCal](http://perk-software.cs.queensu.ca/plus/doc/nightly/user/ApplicationfCal.html)
 3. [PLUSToolkit](https://plustoolkit.github.io/)
+
+
+# TODO
+1. NDI multiface tracker
