@@ -8,7 +8,7 @@
 
 # [US probe stylus alibration](https://onedrive.live.com/view.aspx?resid=7230D4DEC6058018!3712&ithint=file%2cpptx&authkey=!ACNGX3PqH0BLg74)
 
-1. Use fCal to launch config streaming both NDI and BK
+1. Use fCal to launch config streaming both NDI and BK, or use PLUS server and Slicer for streaming
 2. Record stylus calibration data
 3. Use PLUS command to add transform:
     ```
@@ -18,14 +18,24 @@
 5. Use IGT/fiducial register wizard to estimate similarity transform: repeat the following step
     * Set From as ImageFiducials
     * Set To as ToolFiducials
-    * Select StylusTipToTool for "Place To" in "fiducials using transforms" 
+    * Select StylusTipToStylus for "Place To" in "fiducials using transforms" 
     * Play the image sequences, and repeat: place image fiducial in US image, and click place 'To'
     * Save the transform to ImageToTool
 
-# [Realtime record](https://onedrive.live.com/view.aspx?resid=7230D4DEC6058018!13505&ithint=file%2cpptx&authkey=!ABVRs-qX_7k-rgY) and [Reconstruction](https://onedrive.live.com/view.aspx?resid=7230D4DEC6058018!3992&ithint=file%2cpptx&authkey=!ADFvs6W6EnKJR44)
+# [Realtime record](https://onedrive.live.com/view.aspx?resid=7230D4DEC6058018!13505&ithint=file%2cpptx&authkey=!ABVRs-qX_7k-rgY)
 1. use PLUS server to launch reconstruction config, in IGT/Plus Remote, choose Start scout scan
 2. In transforms, use ImageToTracker to transform Image
 3. In IGT/Volume Reslice Driver, select Driver as Image and Mode as transverse to view the tracked images 
+
+# [Reconstruction](https://onedrive.live.com/view.aspx?resid=7230D4DEC6058018!3992&ithint=file%2cpptx&authkey=!ADFvs6W6EnKJR44)
+There are two ways to do reconstruction:
+- Follow the realtime record and use ScoutScan for realtime reconstruction. In this way, need to launch the reconstruction.xml with VirtualVolumeReconstructor.
+- Record the data and use the PlusVolRec.xml and PLUS for offline reconstruction. In this way, launch the reconstruction.xml and record the scan. Then open the PLUS command prompt and run:
+    ```
+    VolumeReconstructor.exe --config-file=Plus_VolRec.xml --image-to-reference-transform=ImageToTracker --source-seq-file=xxx.igs.mha --output-volume-file=xx.mha
+    ```
+    Remember to change the ImageToTool in the config file as the calibrated matrix.
+    
 
 
 # Some tips/debugging:

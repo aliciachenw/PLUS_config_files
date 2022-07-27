@@ -14,7 +14,7 @@ For NDI Polaris passive marker starting kit: Tool (8700339), Stylus (8700340), R
       AcquisitionRate="30"
       LocalTimeOffsetSec="0">
       <DataSources>
-        <DataSource Type="Video" Id="Video" PortUsImageOrientation="MF"  />
+        <DataSource Type="Video" Id="Video" PortUsImageOrientation="MF" ImageType="BRIGHTNESS" ClipRectangleOrigin="225 170"  ClipRectangleSize="469 740" />
       </DataSources>
       <OutputChannels>
         <OutputChannel Id="VideoStream" VideoDataSourceId="Video"  />
@@ -27,7 +27,7 @@ For NDI Polaris passive marker starting kit: Tool (8700339), Stylus (8700340), R
       ToolReferenceFrame="Tracker" 
       SerialPort="1">
       <DataSources>
-        <DataSource Type="Tool" Id="Tool" RomFile="NdiToolDefinitions/y_probe.rom"  />
+        <DataSource Type="Tool" Id="Tool" RomFile="NdiToolDefinitions/PLUS_stylus.rom"  />
         <DataSource Type="Tool" Id="Stylus" RomFile="NdiToolDefinitions/cross_probe.rom"  />
         <!-- <DataSource Type="Tool" Id="Reference" RomFile="NdiToolDefinitions/cross_probe.rom"  /> -->
       </DataSources>
@@ -71,7 +71,7 @@ For NDI Polaris passive marker starting kit: Tool (8700339), Stylus (8700340), R
       <VolumeReconstruction
         ImageCoordinateFrame="Image" ReferenceCoordinateFrame="Tracker"
         Interpolation="LINEAR" Optimization="NONE" Compounding="On" FillHoles="Off" NumberOfThreads="2"
-        OutputSpacing="0.1 0.1 0.1" >
+        OutputSpacing="0.01 0.01 0.01" >
 		<HoleFilling>
           <HoleFillingElement Type="GAUSSIAN" Size="5" Stdev="0.6667" MinimumKnownVoxelsRatio="0.50001" />
           <HoleFillingElement Type="STICK" StickLengthLimit="9" NumberOfSticksToUse="1" />
@@ -83,11 +83,12 @@ For NDI Polaris passive marker starting kit: Tool (8700339), Stylus (8700340), R
   <CoordinateDefinitions>
     <Transform From="StylusTip" To="Stylus"
       Matrix="
-        0.884771 0.16043 0.437541 -11.3933 
-        -0.44352 0.578114 0.68489 107.311 
-        -0.143072 -0.800029 0.582653 -1310.57 
-        0 0 0 1 "
-       Error="0.554951" Date="012617_105449" />
+      1 0 0 8.36564 
+      0 -1 -1.22465e-16 126.6 
+      0 1.22465e-16 -1 -16.9765 
+      0 0 0 1 
+        "
+       Error="0.832801" Date="20220727_1246" />
     <Transform From="Image" To="Reference"
       Matrix="
         1 0.0 0.0 0.0
@@ -96,10 +97,10 @@ For NDI Polaris passive marker starting kit: Tool (8700339), Stylus (8700340), R
         0 0 0 1" />
     <Transform From="Image" To="Tool"
       Matrix="
-        -0.0259715 -0.119934 -0.242946 53.2739 
-        -0.270843 0.00505634 0.0264576 132.272 
-        -0.00714508 0.244278 -0.119828 -241.572 
-        0 0 0 1 
+      -0.00116643 -0.0767184 -0.00737334 -128.78 
+      0.076918 -0.00162448 0.00473443 -16.0177 
+      -0.00486757 -0.00728613 0.0765811 -32.1037 
+      0 0 0 1 
         " />
   </CoordinateDefinitions>
 
