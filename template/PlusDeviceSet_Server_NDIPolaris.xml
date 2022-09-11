@@ -10,11 +10,13 @@ For NDI Polaris passive marker starting kit: Tool (8700339), Stylus (8700340), R
       Type="PolarisTracker"
       ToolReferenceFrame="Tracker" >
       <DataSources>
+        <DataSource Type="Tool" Id="Tool" RomFile="NdiToolDefinitions/y_probe.rom"  />
         <DataSource Type="Tool" Id="Stylus" RomFile="NdiToolDefinitions/cross_probe.rom"  />
         <!-- <DataSource Type="Tool" Id="Reference" RomFile="NdiToolDefinitions/8700449.rom"  /> -->
       </DataSources>
       <OutputChannels>
         <OutputChannel Id="TrackerStream" >
+          <DataSource Id="Tool"/>
           <DataSource Id="Stylus"/>
           <!-- <DataSource Id="Reference"/> -->
         </OutputChannel>
@@ -55,6 +57,7 @@ For NDI Polaris passive marker starting kit: Tool (8700339), Stylus (8700340), R
       <TransformNames>
         <!-- <Transform Name="StylusTipToReference" /> -->
         <!-- <Transform Name="ToolToReference" /> -->
+        <Transform Name="ToolToTracker" />
         <Transform Name="StylusToTracker" />
         <!-- <Transform Name="ReferenceToTracker" /> -->
       </TransformNames>

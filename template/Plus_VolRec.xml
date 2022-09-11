@@ -1,0 +1,31 @@
+<PlusConfiguration version="2.3" PlusRevision="Plus-2.0.0.2801">
+
+  <CoordinateDefinitions>
+    <Transform From="Image" To="Tool"
+      Matrix="
+        -0.00116643 -0.0767184 -0.00737334 -128.78 
+        0.076918 -0.00162448 0.00473443 -16.0177 
+        -0.00486757 -0.00728613 0.0765811 -32.1037 
+        0 0 0 1 "
+       Error="0.582721" Date="2012.02.06 17:57:00"/>
+  </CoordinateDefinitions>
+  
+  <VolumeReconstruction
+    OutputSpacing="0.5 0.5 0.5"
+    ClipRectangleOrigin="215 10"
+    ClipRectangleSize="385 600"
+    Interpolation="LINEAR"
+    Optimization="FULL"
+    Compounding="On"
+    FillHoles="Off"/>
+  
+  <VolumeReconstruction
+    OutputSpacing="0.5 0.5 0.5"
+    ClipRectangleOrigin="175 90"
+    ClipRectangleSize="465 500"
+    Interpolation="LINEAR"
+    Optimization="FULL"
+    Compounding="On"
+    FillHoles="Off"/>
+
+</PlusConfiguration>

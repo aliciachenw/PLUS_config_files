@@ -13,19 +13,20 @@
       AcquisitionRate="30"
       LocalTimeOffsetSec="0">
       <DataSources>
-        <DataSource Type="Video" Id="Video" PortUsImageOrientation="MF" ImageType="BRIGHTNESS" ClipRectangleOrigin="227 170"  ClipRectangleSize="465 727" /> 
+        <DataSource Type="Video" Id="Video" PortUsImageOrientation="MF" ImageType="BRIGHTNESS" ClipRectangleOrigin="225 170"  ClipRectangleSize="469 740" />
       </DataSources>
       <OutputChannels>
         <OutputChannel Id="VideoStream" VideoDataSourceId="Video"  />
       </OutputChannels>
     </Device>
+
     <Device
       Id="TrackerDevice"
       Type="PolarisTracker"
       ToolReferenceFrame="Tracker" 
       SerialPort="1">
       <DataSources>
-        <DataSource Type="Tool" Id="Probe" RomFile="NdiToolDefinitions/PLUS_multiface.rom"  />
+        <DataSource Type="Tool" Id="Tool" RomFile="NdiToolDefinitions/y_probe.rom"  />
         <DataSource Type="Tool" Id="Stylus" RomFile="NdiToolDefinitions/cross_probe.rom"  />
         <!-- <DataSource Type="Tool" Id="Reference" RomFile="NdiToolDefinitions/cross_probe.rom"  /> -->
       </DataSources>
@@ -34,9 +35,9 @@
       </InputChannels>
       <OutputChannels>
         <OutputChannel Id="TrackerStream" >
-          <DataSource Id="Probe"/>
+          <DataSource Id="Tool"/>
           <DataSource Id="Stylus"/>
-          <!-- <DataSource Id="Reference"/> -->
+          <DataSource Id="Reference"/>
         </OutputChannel>
       </OutputChannels>
     </Device>
@@ -65,9 +66,9 @@
   <CoordinateDefinitions>
     <Transform From="StylusTip" To="Stylus"
       Matrix="
-        1 0 0 114.317 
-        0 -1 0 -3.633 
-        0 0 -1 -19.7526 
+        1 0 0 5.81368 
+        0 -1 0 120.768 
+        0 0 -1 -23.8192 
         0 0 0 1 
         "
        Error="0.554951" Date="012617_105449" />
@@ -107,7 +108,9 @@
         <Message Type="TRANSFORM" />
       </MessageTypes>
       <TransformNames>
-        <Transform Name="ProbeToTracker" />
+        <!-- <Transform Name="StylusTipToReference" /> -->
+        <!-- <Transform Name="ToolToReference" /> -->
+        <Transform Name="ToolToTracker" />
         <Transform Name="StylusToTracker" />
         <!-- <Transform Name="ReferenceToTracker" /> -->
       </TransformNames>

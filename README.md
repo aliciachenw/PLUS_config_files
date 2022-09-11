@@ -51,7 +51,7 @@ There are two ways to do reconstruction:
     <DataSource Type="Video" Id="Video" PortUsImageOrientation="MF" ImageType="BRIGHTNESS" ClipRectangleOrigin="225 170"  ClipRectangleSize="469 500" />
     ```
     The coordinate is (x, y) (for 2D images we need to omit the third dimension). The value of the pixel location can refer to Slicer (though Slicer shows the image upside down)
-
+9. Ultrasound coordinate system in PLUS: [LINK](http://perk-software.cs.queensu.ca/plus/doc/nightly/user/UltrasoundImageOrientation.html)
 
 
 # Official Tutorial
