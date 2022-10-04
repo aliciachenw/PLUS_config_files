@@ -1,0 +1,123 @@
+<PlusConfiguration version="2.1">
+
+  <DataCollection StartupDelaySec="1.0" >
+    <DeviceSet 
+      Name="Plus fCal: NDI Polaris tracker with passive markers and BK OEM" 
+      Description="Record tool tracking and video data through fCal" />
+    <Device 
+      Id="VideoDevice"
+      Type="BkProFocusOem"
+      OemPort="7915"
+      ScannerAddress="10.0.0.3"
+      OfflineTestingFilePath="C:/Research/fCal/fCal_OfflineTesting"
+      AcquisitionRate="30"
+      LocalTimeOffsetSec="0">
+      <DataSources>
+        <DataSource Type="Video" Id="Video" PortUsImageOrientation="MF" ImageType="BRIGHTNESS" ClipRectangleOrigin="227 170"  ClipRectangleSize="465 727" />
+      </DataSources>
+      <OutputChannels>
+        <OutputChannel Id="VideoStream" VideoDataSourceId="Video"  />
+      </OutputChannels>
+    </Device>
+    <Device
+      Id="TrackerDevice"
+      Type="PolarisTracker"
+      ToolReferenceFrame="Tracker" 
+      SerialPort="1">
+      <DataSources>
+        <DataSource Type="Tool" Id="Probe" RomFile="NdiToolDefinitions/PLUS_multiface.rom"  />
+        <DataSource Type="Tool" Id="Stylus" RomFile="NdiToolDefinitions/cross_probe.rom"  />
+        <!-- <DataSource Type="Tool" Id="Reference" RomFile="NdiToolDefinitions/cross_probe.rom"  /> -->
+      </DataSources>
+      <OutputChannels>
+        <OutputChannel Id="TrackerStream" >
+          <DataSource Id="Probe"/>
+          <DataSource Id="Stylus"/>
+          <!-- <DataSource Id="Reference"/> -->
+        </OutputChannel>
+      </OutputChannels>
+    </Device>
+    <Device 
+      Id="TrackedVideoDevice" 
+      Type="VirtualMixer" >
+      <InputChannels>
+        <InputChannel Id="TrackerStream" />
+        <InputChannel Id="VideoStream" />
+      </InputChannels>
+      <OutputChannels>
+        <OutputChannel Id="TrackedVideoStream"/>
+      </OutputChannels>
+    </Device>
+
+    <Device
+      Id="CaptureDevice"
+      Type="VirtualCapture"
+      BaseFilename="RecordingTest.igs.mha"
+      EnableCapturingOnStart="FALSE" >
+      <InputChannels>
+        <InputChannel Id="TrackedVideoStream" />
+      </InputChannels>
+    </Device>  
+
+    <Device
+      Id="VolumeReconstructorDevice"
+      Type="VirtualVolumeReconstructor">
+      <InputChannels>
+        <InputChannel Id="TrackedVideoStream" />
+      </InputChannels>
+      <VolumeReconstruction
+        ImageCoordinateFrame="Image" ReferenceCoordinateFrame="Tracker"
+        Interpolation="LINEAR" Optimization="NONE" Compounding="On" FillHoles="Off" NumberOfThreads="2"
+        OutputSpacing="0.01 0.01 0.01" >
+		<HoleFilling>
+          <HoleFillingElement Type="GAUSSIAN" Size="5" Stdev="0.6667" MinimumKnownVoxelsRatio="0.50001" />
+          <HoleFillingElement Type="STICK" StickLengthLimit="9" NumberOfSticksToUse="1" />
+         </HoleFilling>
+	   </VolumeReconstruction>
+    </Device>
+  </DataCollection>
+
+  <CoordinateDefinitions>
+    <Transform From="StylusTip" To="Stylus"
+      Matrix="
+      1 0 0 -176.404 
+      0 -1 0 -0.754891 
+      0 0 -1 -18.8071 
+      0 0 0 1"
+      Error="0.38894" Date="20220918_1026" />
+    <Transform From="Image" To="Reference"
+      Matrix="
+        1 0.0 0.0 0.0
+        0.0 1 0.0 0.0
+        0.0 0.0 1 0.0        
+        0 0 0 1" />
+    <Transform From="Image" To="Probe"
+      Matrix="
+      -0.00337317 -0.0783049 0.018455 -138.454 
+      0.000417273 0.0184539 0.0783767 35.7561 
+      -0.0804492 0.00337898 -0.000367279 16.584 
+      0 0 0 1 " />
+  </CoordinateDefinitions>
+
+<!-- 
+  <Rendering WorldCoordinateFrame="Tracker" DisplayedImageOrientation="MF" >
+    <DisplayableObject Type="Image" ObjectCoordinateFrame="Image" Id="LiveImage"/>
+  </Rendering> --> 
+
+  <fCal
+    ImageDisplayableObjectId="LiveImage"
+    MaxTimeSpentWithProcessingMs="70"
+    TemporalCalibrationDurationSec="10"
+    FixedChannelId="VideoStream" 
+    FixedSourceId="Video"
+    MovingChannelId="TrackerStream"
+    MovingSourceId="ProbeToTracker"
+    DefaultSelectedChannelId="TrackedVideoStream" 
+     />
+
+  
+  <vtkTemporalCalibrationAlgo
+
+    />
+
+</PlusConfiguration>
