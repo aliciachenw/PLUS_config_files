@@ -1,8 +1,8 @@
 <PlusConfiguration version="2.3" PlusRevision="Plus-2.0.0.2801">
 
-  <VolumeReconstruction OutputSpacing="0.2 0.2 0.2"
+  <VolumeReconstruction OutputSpacing="0.1 0.1 0.1"
     Interpolation="LINEAR" Optimization="FULL"
-    CompoundingMode="MEAN" FillHoles="ON">
+    CompoundingMode="MAXIMUM" FillHoles="ON">
     <HoleFilling>
       <HoleFillingElement
         Type="STICK"     
