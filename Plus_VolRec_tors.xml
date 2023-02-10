@@ -1,10 +1,10 @@
-<!-- use this for waterbath experiment -->
+<!-- use this for volunteer scanning -->
 
 <PlusConfiguration version="2.3" PlusRevision="Plus-2.0.0.2801">
 
-  <VolumeReconstruction OutputSpacing="0.2 0.2 0.2"
+  <VolumeReconstruction OutputSpacing="0.1 0.1 0.1"
     Interpolation="LINEAR" Optimization="FULL"
-    CompoundingMode="MAXIMUM" FillHoles="ON">
+    CompoundingMode="MEAN" FillHoles="ON">
     <HoleFilling>
       <HoleFillingElement
         Type="STICK"     
@@ -13,5 +13,3 @@
     </HoleFilling>
   </VolumeReconstruction>
 </PlusConfiguration>
-
-
