@@ -8,7 +8,7 @@
       Id="VideoDevice"
       Type="BkProFocusOem"
       OemPort="7915"
-      ScannerAddress="10.0.0.3"
+      ScannerAddress="10.0.0.1"
       OfflineTestingFilePath="C:/Research/fCal/fCal_OfflineTesting"
       AcquisitionRate="30"
       LocalTimeOffsetSec="0">
