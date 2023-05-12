@@ -25,7 +25,7 @@
       ToolReferenceFrame="Tracker" 
       SerialPort="10">
       <DataSources>
-        <DataSource Type="Tool" Id="Probe" RomFile="NdiToolDefinitions/multiface_green.rom"  />
+        <DataSource Type="Tool" Id="Probe" RomFile="NdiToolDefinitions/multiface_green_0508.rom"  />
         <DataSource Type="Tool" Id="Stylus" RomFile="NdiToolDefinitions/cross_probe.rom"  />
         <!-- <DataSource Type="Tool" Id="Reference" RomFile="NdiToolDefinitions/cross_probe.rom"  /> -->
       </DataSources>
@@ -93,10 +93,10 @@
         0 0 0 1" />
     <Transform From="Image" To="Probe"
       Matrix="
-      0.00615583 -0.0146706 -0.0620736 -120.598 
-      0.0152382 0.0608945 -0.0128808 221.913 
-      0.0619367 -0.0135237 0.00933847 -10.8265 
-      0 0 0 1 " />
+      0.059541 0.000699868 0.000177507 -15.3723 
+      0.000652918 -0.0584393 0.0114049 -283.683 
+      0.000308257 -0.0114021 -0.0584427 -164.695 
+      0 0 0 1" />
   </CoordinateDefinitions>
 
 <!-- 
