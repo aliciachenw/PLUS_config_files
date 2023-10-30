@@ -1,0 +1,64 @@
+<PlusConfiguration version="2.1">
+
+  <DataCollection StartupDelaySec="1.0" >
+    <DeviceSet 
+      Name="Plus fCal: just BK video (4cm depth)" 
+      Description="Record only video data (depth 4cm)" />
+    <Device 
+      Id="VideoDevice"
+      Type="BkProFocusOem"
+      OemPort="7915"
+      ScannerAddress="10.0.0.1"
+      OfflineTestingFilePath="C:/Research/fCal/fCal_OfflineTesting"
+      AcquisitionRate="30"
+      LocalTimeOffsetSec="0">
+      <DataSources>
+        <DataSource Type="Video" Id="Video" PortUsImageOrientation="MF" ImageType="BRIGHTNESS" ClipRectangleOrigin="111 172"  ClipRectangleSize="698 727" />
+      </DataSources>
+      <OutputChannels>
+        <OutputChannel Id="VideoStream" VideoDataSourceId="Video"  />
+      </OutputChannels>
+    </Device>
+    <Device
+      Id="CaptureDevice"
+      Type="VirtualCapture"
+      BaseFilename="RecordingTest.igs.mha"
+      EnableCapturingOnStart="FALSE" >
+      <InputChannels>
+        <InputChannel Id="VideoStream" />
+      </InputChannels>
+    </Device>  
+  </DataCollection>
+  <CoordinateDefinitions>
+    <Transform From="StylusTip" To="Stylus"
+      Matrix="
+      1 0 0 -176.404 
+      0 -1 0 -0.754891 
+      0 0 -1 -18.8071 
+      0 0 0 1"
+      Error="0.38894" Date="20220918_1026" />
+    <Transform From="Image" To="Reference"
+      Matrix="
+        1 0.0 0.0 0.0
+        0.0 1 0.0 0.0
+        0.0 0.0 1 0.0        
+        0 0 0 1" />
+    <Transform From="Image" To="Probe"
+      Matrix="
+        0.0585211 -0.000713006 -0.00454723 -21.5892 
+        0.00152125 0.0577304 0.0105257 277.935 
+        0.00434413 -0.0106111 0.0575712 -163.944 
+        0 0 0 1 
+        " />
+  </CoordinateDefinitions>
+
+
+  <fCal
+    ImageDisplayableObjectId="LiveImage"
+    MaxTimeSpentWithProcessingMs="70"
+    DefaultSelectedChannelId="VideoStream" 
+     />
+
+
+
+</PlusConfiguration>
