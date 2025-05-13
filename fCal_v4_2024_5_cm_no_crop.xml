@@ -2,8 +2,8 @@
 
   <DataCollection StartupDelaySec="1.0" >
     <DeviceSet 
-      Name="2024: NDI Polaris tracker with passive markers and BK OEM (5cm)" 
-      Description="Record tool tracking and video data through fCal (depth 5cm)" />
+      Name="2024: and BK OEM (5cm) no crop" 
+      Description="Record video data through fCal no crop" />
     <Device 
       Id="VideoDevice"
       Type="BkProFocusOem"
@@ -13,35 +13,16 @@
       AcquisitionRate="30"
       LocalTimeOffsetSec="0">
       <DataSources>
-        <DataSource Type="Video" Id="Video" PortUsImageOrientation="MF" ImageType="BRIGHTNESS" ClipRectangleOrigin="80  169"  ClipRectangleSize="698 727" />
+        <DataSource Type="Video" Id="Video" PortUsImageOrientation="MF" ImageType="BRIGHTNESS"/>
       </DataSources>
       <OutputChannels>
         <OutputChannel Id="VideoStream" VideoDataSourceId="Video"  />
-      </OutputChannels>
-    </Device>
-    <Device
-      Id="TrackerDevice"
-      Type="PolarisTracker"
-      ToolReferenceFrame="Tracker" 
-      SerialPort="10">
-      <DataSources>
-        <DataSource Type="Tool" Id="Probe" RomFile="NdiToolDefinitions/HoloTORSUS_Jan15.rom"  />
-        <DataSource Type="Tool" Id="Stylus" RomFile="NdiToolDefinitions/cross_probe.rom"  />
-        <!-- <DataSource Type="Tool" Id="Reference" RomFile="NdiToolDefinitions/cross_probe.rom"  /> -->
-      </DataSources>
-      <OutputChannels>
-        <OutputChannel Id="TrackerStream" >
-          <DataSource Id="Probe"/>
-          <DataSource Id="Stylus"/>
-          <!-- <DataSource Id="Reference"/> -->
-        </OutputChannel>
       </OutputChannels>
     </Device>
     <Device 
       Id="TrackedVideoDevice" 
       Type="VirtualMixer" >
       <InputChannels>
-        <InputChannel Id="TrackerStream" />
         <InputChannel Id="VideoStream" />
       </InputChannels>
       <OutputChannels>
@@ -93,11 +74,11 @@
         0 0 0 1" />
     <Transform From="Image" To="Probe"
       Matrix="
-        -0.000191178	0.0656413	0.00117545	116.769
-        -0.067337	-0.000788267	-0.00711451	22.148
-        -0.00722243	-0.00124836	0.0662997	-8.95487
+        -0.00325536	0.0657721	-0.000994324	116.998
+        -0.0679649	-0.00278315	0.00189849	21.6799
+        0.00187977	0.00105623	0.0669198	-12.0548
         0	0	0	1"
-       Error="1.0051" Date="050625_161414" />
+       Error="1.0051" Date="011525_163035" />
   </CoordinateDefinitions>
 
 <!-- 
